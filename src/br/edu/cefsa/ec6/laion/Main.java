@@ -10,15 +10,15 @@ import br.edu.cefsa.ec6.laion.xml.Xml;
 
 public class Main {
 	private static String readInputFile(String path) throws IOException{
-		StringBuilder sb = new StringBuilder();
-    	InputStreamReader inputStream = new InputStreamReader(new FileInputStream(path), Charset.forName("UTF-8"));
-	        
-    	int character = 0;
-    	while ((character = inputStream.read()) != -1) {
+			StringBuilder sb = new StringBuilder();
+			InputStreamReader inputStream = new InputStreamReader(new FileInputStream(path), Charset.forName("UTF-8"));
+        
+			int character = 0;
+			while ((character = inputStream.read()) != -1) {
 				sb.append((char) character);
-    	}
-    	inputStream.close();
-		return sb.toString();		
+			}
+			inputStream.close();
+			return sb.toString();		
 	}
 	private static void writeInputFile(String path, String text) throws IOException{
 		FileOutputStream outputStream = new FileOutputStream(path);
