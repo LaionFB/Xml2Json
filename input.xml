@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pokemon>
+    <name>Charizard</name>
+    <number>6</number>
+    <types>
+	<type>fire</type>
+	<type>flying</type>
+    </types>
+    <moves>
+	<move>
+	    <name>Flamethrower</name>
+	    <type>fire</type>
+	    <category>special</category>
+	    <power>90</power>
+	</move>
+	<move>
+	    <name>Dragon Claw</name>
+	    <type>dragon</type>
+	    <category>physical</category>
+	    <power>80</power>
+	</move>
+	<move>
+	    <name>Earthquake</name>
+	    <type>ground</type>
+	    <category>physical</category>
+	    <power>100</power>
+	</move>
+	<move>
+	    <name>Roost</name>
+	    <type>flying</type>
+	    <category>status</category>
+	    <power>-</power>
+	</move>
+    </moves>
+</pokemon>
