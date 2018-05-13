@@ -17,35 +17,32 @@ public class Xml {
 		Matcher tokenMatcher = tokenPattern.matcher(xmlText);
 		Stack<OpenedTag> openedTags = new Stack<OpenedTag>();
 		
-		while(tokenMatcher.find()){
-			if(this.xmlRootNode != null)
-				throw new XmlParseException("Xml has more than one root tag.");
-			
+		while(tokenMatcher.find()){			
 			String tagName = tokenMatcher.group(1);
 			
 			if(isOpenTagToken(tagName)){
+				if(this.xmlRootNode != null){
+					String format = "Xml has more than one root tag ('%s' and '%s' at position %s).";
+					throw new XmlParseException(String.format(format, this.xmlRootNode.getName(), tagName, tokenMatcher.start()));
+				}
 				openedTags.put(new OpenedTag(tagName, tokenMatcher.start(), tokenMatcher.end()));
 				continue;
 			}
 
 			validateClosingTag(openedTags, tagName.substring(1), tokenMatcher.start());
 			
-			OpenedTag tagToClose = openedTags.pop();
-			
-			XmlNode newTag;
-			if(tagToClose.getChildren().isEmpty())
-				newTag = new XmlNodeString(tagToClose.getName(), xmlText.substring(tagToClose.getContentStartIndex(), tokenMatcher.start()));
-			else
-				newTag = newXmlNodeObject(tagToClose);
-
-			if(!openedTags.isEmpty()){
+			OpenedTag tagToClose = openedTags.pop();			
+			XmlNode newTag = (tagToClose.getChildren().isEmpty())
+							? new XmlNodeString(tagToClose.getName(), xmlText.substring(tagToClose.getContentStartIndex(), tokenMatcher.start()))
+							: newXmlNodeObject(tagToClose);
+							
+			if(openedTags.isFilled())
 				openedTags.see().putChild(newTag);
-			}else{
+			else
 				this.xmlRootNode = newTag;
-			}		
 		}
 		
-		if(!openedTags.isEmpty()){
+		if(openedTags.isFilled()){
 			OpenedTag notClosedTag = openedTags.pop();
 			String format = "Tag '%s' was opened and never closed (at position %s).";
 			throw new XmlParseException(String.format(format, notClosedTag.getName(), notClosedTag.getTagIndex()));
@@ -68,7 +65,7 @@ public class Xml {
 			String format = "Cannot close tag '%s' since it has never been opened (at position %s).";
 			throw new XmlParseException(String.format(format, closingTagName, position));
 		}
-		if(!openedTags.see().getName().equals(closingTagName)){
+		else if(!openedTags.see().getName().equals(closingTagName)){
 			OpenedTag openedTag = openedTags.pop();
 			String format = "Tag '%s' cannot be closed since tag '%s' is the current opened tag (at position %s).";
 			throw new XmlParseException(String.format(format, closingTagName, openedTag.getName(), position));			
@@ -83,7 +80,7 @@ public class Xml {
 			return new XmlNodeArray(openedTag.getName(), openedTag.getChildren());
 		} catch(XmlParseException e){ }
 		
-		String format = "Tag '%s' is neighter an array nor a dictionary, " + 
+		String format = "Tag '%s' is neighter an array nor a hash map, " + 
 				"since it's children have neighter all the same key " +
 				"nor all different keys (at position %s).";
 		throw new XmlParseException(String.format(format, openedTag.getName(), openedTag.getTagIndex()));

@@ -11,7 +11,7 @@ abstract class XmlNode {
 		return this.name;
 	}
 	
-	public abstract String toJson(String paddingStart, boolean displayName);
+	public abstract String toJson(String padding, boolean displayName);
 	
 	protected String getFormatedName(){
 		return String.format("\"%s\": ", this.name);

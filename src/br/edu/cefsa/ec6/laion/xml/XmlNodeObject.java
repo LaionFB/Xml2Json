@@ -15,18 +15,12 @@ abstract class XmlNodeObject extends XmlNode {
 							char endDelimiter,
 							boolean childDisplaysName){
 		super(name);
-		this.children = children;
+		this.children = new ArrayList<XmlNode>(children);
 		this.startDelimiter = startDelimiter;
 		this.endDelimiter = endDelimiter;
 		this.childDisplaysName = childDisplaysName;
-		
-		this.validateChildren();
 	}
 	
-	public List<XmlNode> getChildren(){
-		return new ArrayList<XmlNode>(this.children);
-	}
-
 	@Override
 	public String toJson(String padding, boolean displayName){
 		StringBuilder sb = new StringBuilder();
@@ -49,6 +43,4 @@ abstract class XmlNodeObject extends XmlNode {
 		sb.append(endDelimiter);
 		return sb.toString();
 	}
-	
-	protected abstract void validateChildren();
 }

@@ -1,6 +1,6 @@
 package br.edu.cefsa.ec6.laion.xml;
 
-final class XmlNodeString extends XmlNode {
+public final class XmlNodeString extends XmlNode {
 	private String content;
 	
 	public XmlNodeString(String name, String content){

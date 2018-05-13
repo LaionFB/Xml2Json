@@ -15,13 +15,17 @@ public class Stack<T> {
 			throw new EmptyStackException("The stack is empty and cannot pop an entry.");
 
 		StackNode<T> ret = this.top;
-		this.top = this.top.getNext();
+		this.top = ret.getNext();
 		return ret.getValue();
 	}
 	public void put(T value){
 		this.top = new StackNode<T>(value, this.top);
 	}
+	
 	public boolean isEmpty(){
 		return this.top == null;
+	}
+	public boolean isFilled(){
+		return this.top != null;		
 	}
 }
