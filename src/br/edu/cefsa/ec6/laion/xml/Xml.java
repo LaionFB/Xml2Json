@@ -33,8 +33,8 @@ public class Xml {
 			
 			OpenedTag tagToClose = openedTags.pop();			
 			XmlNode newTag = (tagToClose.getChildren().isEmpty())
-							? new XmlNodeString(tagToClose.getName(), xmlText.substring(tagToClose.getContentStartIndex(), tokenMatcher.start()))
-							: newXmlNodeObject(tagToClose);
+					? new XmlNodeString(tagToClose.getName(), xmlText.substring(tagToClose.getContentStartIndex(), tokenMatcher.start()))
+					: newXmlNodeObject(tagToClose);
 							
 			if(openedTags.isFilled())
 				openedTags.see().putChild(newTag);

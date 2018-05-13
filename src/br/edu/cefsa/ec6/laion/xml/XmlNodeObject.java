@@ -10,10 +10,10 @@ abstract class XmlNodeObject extends XmlNode {
 	private boolean childDisplaysName;
 	
 	protected XmlNodeObject(String name,
-							List<XmlNode> children,
-							char startDelimiter,
-							char endDelimiter,
-							boolean childDisplaysName){
+				List<XmlNode> children,
+				char startDelimiter,
+				char endDelimiter,
+				boolean childDisplaysName){
 		super(name);
 		this.children = new ArrayList<XmlNode>(children);
 		this.startDelimiter = startDelimiter;
