@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 abstract class XmlNodeObject extends XmlNode {
-	private List<XmlNode> children;
+	protected List<XmlNode> children;
 	private char startDelimiter;
 	private char endDelimiter;
 	private boolean childDisplaysName;
@@ -19,6 +19,8 @@ abstract class XmlNodeObject extends XmlNode {
 		this.startDelimiter = startDelimiter;
 		this.endDelimiter = endDelimiter;
 		this.childDisplaysName = childDisplaysName;
+		
+		this.validateChildren();
 	}
 	
 	public List<XmlNode> getChildren(){
@@ -47,4 +49,6 @@ abstract class XmlNodeObject extends XmlNode {
 		sb.append(endDelimiter);
 		return sb.toString();
 	}
+	
+	protected abstract void validateChildren();
 }

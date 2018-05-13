@@ -6,8 +6,11 @@ import java.util.stream.Collectors;
 final class XmlNodeArray extends XmlNodeObject {
 	public XmlNodeArray(String name, List<XmlNode> children){
 		super(name, children, '[', ']', false);
-		
-		List<String> childrenNames = children.stream().map(tag -> tag.getName()).collect(Collectors.toList());
+	}
+
+	@Override
+	protected void validateChildren() {
+		List<String> childrenNames = this.children.stream().map(tag -> tag.getName()).collect(Collectors.toList());
 		for(int i = 1; i < childrenNames.size(); i++){
 			for(String tagName : childrenNames.subList(0, i)){
 				if(!tagName.equals(childrenNames.get(i))){
@@ -15,6 +18,6 @@ final class XmlNodeArray extends XmlNodeObject {
 					throw new XmlParseException(String.format(format, name));
 				}
 			}
-		}
+		}		
 	}
 }

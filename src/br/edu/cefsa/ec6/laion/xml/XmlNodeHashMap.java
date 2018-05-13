@@ -6,7 +6,10 @@ import java.util.stream.Collectors;
 final class XmlNodeHashMap extends XmlNodeObject {
 	public XmlNodeHashMap(String name, List<XmlNode> children){
 		super(name, children, '{', '}', true);
+	}
 
+	@Override
+	protected void validateChildren() {
 		List<String> childrenNames = children.stream().map(tag -> tag.getName()).collect(Collectors.toList());
 		for(int i = 1; i < childrenNames.size(); i++){
 			for(String tagName : childrenNames.subList(0, i)){
